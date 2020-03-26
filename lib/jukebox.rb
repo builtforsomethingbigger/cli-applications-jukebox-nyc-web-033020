@@ -29,7 +29,8 @@ def list(songs)
 end
 
 def exit_jukebox
-binding.pry  puts "Goodbye"
+binding binding.pry
+  puts "Goodbye"
 end
 
 def run(songs)

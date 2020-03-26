@@ -57,6 +57,6 @@ def run(songs)
         puts "Invalid input, please try again"
         user_response = gets.chomp
     end
-    exit_jukebox
   end
+  exit_jukebox
 end

@@ -1,33 +1,32 @@
+require 'pry'
+
 def help
-  puts "I accept the following commands:\n
-- help : displays this help message\n
-- list : displays a list of songs you can play\n
-- play : lets you choose a song to play\n
-- exit : exits this program"
-end
-
-
-def list(songs)
-  songs.each_with_index do |song,index|
-    puts "#{index + 1}. #{song}"
-  end
+  puts "I accept the following commands:"
+  puts "- help : displays this help message"
+  puts "- list : displays a list of songs you can play"
+  puts "- play : lets you choose a song to play"
+  puts "- exit : exits this program"
 end
 
 def play(songs)
-  list(songs)
-  puts
-  puts "What song do you want to play. Enter song name or number"
-  song_pick = gets.chomp.downcase
-  # songs.each_with_index do |song,index|
-    if songs.include?(song_pick)
-      puts "Now playing song #{song_pick}"
-    elsif songs[song_pick.to_i - 1]
-      puts "Now playing #{songs[song_pick.to_i - 1]}"
-    else
-      puts "Invalid input. Please try again!"
+  puts "Please enter a song name or number:"
+  choice = gets.chomp
+  valid = false
+  songs.each_with_index do |song, index|
+    if (choice.to_i - 1 == index)
+      puts "Playing #{songs[index]}"
+      valid = true
+    elsif (choice == song)
+      puts "Playing #{choice}"
+      valid = true
     end
+  end
+  puts "Invalid input, please try again" if valid == false
 end
 
+def list(songs)
+  songs.each_with_index{|song, index| puts "#{index + 1}. #{song}"}
+end
 
 def exit_jukebox
   puts "Goodbye"
@@ -35,24 +34,19 @@ end
 
 def run(songs)
   help
-  puts
-  puts "Please make a selection"
-  choice = gets.chomp
-  until choice == 'exit'
-    case choice
-
+  loop do
+    puts "Please enter a command:"
+    input = gets.chomp
+    case input
+    when 'play'
+      play(songs)
     when 'help'
       help
     when 'list'
       list(songs)
-    when 'play'
-      play(songs)
-    else
-      puts 'That is not a option! Try Again.'
+    when 'exit'
+      break
     end
-  puts
-  puts "Please make a selection"
-  choice = gets.chomp
   end
-exit_jukebox
+  exit_jukebox
 end

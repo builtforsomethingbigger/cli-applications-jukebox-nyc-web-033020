@@ -1,30 +1,31 @@
+require 'pry'
+
 def help
   puts "I accept the following commands:"
   puts "- help : displays this help message"
-  puts "- list : lets you choose a song to play"
+  puts "- list : displays a list of songs you can play"
   puts "- play : lets you choose a song to play"
   puts "- exit : exits this program"
 end
 
-def list(songs)
-  songs.each_with_index do |song, i|
-    puts "#{i+1}. #{song}"
+def play(songs)
+  puts "Please enter a song name or number:"
+  choice = gets.chomp
+  valid = false
+  songs.each_with_index do |song, index|
+    if (choice.to_i - 1 == index)
+      puts "Playing #{songs[index]}"
+      valid = true
+    elsif (choice == song)
+      puts "Playing #{choice}"
+      valid = true
+    end
   end
+  puts "Invalid input, please try again" if valid == false
 end
 
-def play(songs)
-  puts "Please enter a song name or number"
-  input = gets.chomp
-  songs.each_with_index do |song, idx|
-    if input.to_i == (idx+1) || input == song
-      puts "Playing #{song}"
-      break
-    else
-      puts "Invalid input, please try again"
-      break
-    end
-
-  end
+def list(songs)
+  songs.each_with_index{|song, index| puts "#{index + 1}. #{song}"}
 end
 
 def exit_jukebox
@@ -33,21 +34,19 @@ end
 
 def run(songs)
   help
-  input = ""
-  while input != "exit"
+  loop do
     puts "Please enter a command:"
     input = gets.chomp
     case input
-    when "play"
-      play(song)
-    when "list"
-      list(songs)
-    when "help"
+    when 'play'
+      play(songs)
+    when 'help'
       help
-    when "exit"
-      exit_jukebox
-    else
-      puts "Invalid input, please try again"
+    when 'list'
+      list(songs)
+    when 'exit'
+      break
     end
   end
+  exit_jukebox
 end

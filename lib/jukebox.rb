@@ -28,7 +28,7 @@ def list(songs)
 end
 
 def exit_jukebox
-  puts "Goodbye"
+  puts "I accept the following commands:"
 end
 
 def run(songs)
